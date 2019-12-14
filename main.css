@@ -1,0 +1,73 @@
+@font-face {
+  font-family: ds-digit;
+  src: url("DS-DIGIT.TTF");
+}
+.floor {
+  display: flex;
+}
+
+.left {
+  display: flex;
+}
+.right {
+  display: flex;
+}
+
+.elevator {
+  border: 1px solid black;
+}
+
+.door {
+  background: gray;
+  height: 70px;
+  width: 50px;
+}
+
+.status {
+  text-align: center;
+  color: red;
+  background: black;
+  font-size: 1.8em;
+  font-family: "ds-digit";
+}
+
+.button {
+  display: flex;
+  padding-top: 30px;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.triangle {
+  width: 0;
+  height: 0;
+  padding: 0;
+  background: none;
+  margin: 0.4em 0.6em;
+  border: 0.6em solid transparent;
+  outline: none;
+}
+
+.up {
+  border-bottom: 1em solid gray;
+}
+
+.down {
+  border-top: 1em solid gray;
+}
+
+.active-up {
+  border-bottom-color: red;
+}
+
+.active-down {
+  border-top-color: red;
+}
+
+.number {
+  display: flex;
+  font-size: 1.4em;
+  justify-content: center;
+  align-items: center;
+  width: 1.4em;
+}
