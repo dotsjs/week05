@@ -22,20 +22,39 @@ const setView = view => {
   };
 };
 
+const setElevator = left_right => elevator => func =>
+  (Elevators[left_right] = func(elevator));
+
 const getStatus = (now, to) => (to > now ? "up" : "down");
 const updown = (now, to) => (to > now ? 1 : -1);
 const getFloor = floor => (floor === 0 ? "B1" : floor);
+const setStatus = status => elevator => ({ ...elevator, status });
+const setFloor = floor => elevator => ({ ...elevator, floor });
+const addCheckList = check => elevator => ({
+  ...elevator,
+  checkList: [...checkList, check]
+});
+const lookupCheckList = floor => checkList =>
+  checkList.filter(check =>
+    check.floor === floor ? removeCheck(check.current, check.to) : true
+  );
+const removeCheck = (current, to) => current.classList.remove(`active-${to}`);
+const setOrderQueue = orderQueue => elevator => ({ ...elevator, orderQueue });
+const addOrder = order => elevator => ({
+  ...elevator,
+  orderQueue: [...orderQueue, order]
+});
 
 const moveTo = (current, elevator, floor, to) => {
   if (elevator.floor === floor) {
     elevator.status = "stop";
     current.classList.remove(`active-${to}`);
-    while (elevator.orderQueue.length) {
-      const order = elevator.orderQueue.shift();
+    elevator.orderQueue.forEach(order => {
       setTimeout(() => {
         order.func(order.current, elevator, order.floor);
-      }, 0);
-    }
+      });
+    });
+    elevator.orderQueue = [];
     return;
   }
   elevator.checkList = elevator.checkList.filter(check => {
@@ -61,7 +80,7 @@ const up = (current, elevator, floor) => {
     moveTo(current, elevator, floor, "up");
   } else {
     if (elevator.status === "up" && elevator.floor < floor) {
-      elevator.checkList.push({ current, floor });
+      elevator.checkList.push({ current, floor, to });
     } else {
       elevator.orderQueue.push({ func: up, floor, current });
     }
