@@ -71,3 +71,7 @@
   align-items: center;
   width: 1.4em;
 }
+
+.active-door {
+  background: greenyellow;
+}
