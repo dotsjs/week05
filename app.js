@@ -24,6 +24,7 @@ const setView = view => {
 
 const getStatus = (now, to) => (to > now ? "up" : "down");
 const updown = (now, to) => (to > now ? 1 : -1);
+const getFloor = floor => (floor === 0 ? "B1" : floor);
 
 const moveTo = (current, elevator, floor, to) => {
   if (elevator.floor === floor) {
@@ -50,7 +51,7 @@ const moveTo = (current, elevator, floor, to) => {
     const next = elevator.floor + updown(elevator.floor, floor);
     elevator.setDoor(elevator.floor, next);
     elevator.floor = next;
-    elevator.setView(elevator.floor === 0 ? "B1" : elevator.floor);
+    elevator.setView(getFloor(elevator.floor));
     moveTo(current, elevator, floor, to);
   }, 1000);
 };
